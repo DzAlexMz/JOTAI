@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jotai - Content Creator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #ff0000;
+            --dark-red: #cc0000;
+            --light-red: #ff3333;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0f0f;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 1rem;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--primary-red);
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0.5rem 1rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-red);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url('https://i.postimg.cc/TYZf1kHQ/IMG-6887.webp');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent, rgba(255, 0, 0, 0.1));
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            transform: translateY(0);
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-red);
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, var(--dark-red), var(--primary-red));
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
+        }
+
+        .social-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .social-button:hover::before {
+            left: 100%;
+        }
+
+        .content-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary-red);
+        }
+
+        .title {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-red);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #cccccc;
+            line-height: 1.6;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 0, 0, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-red);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #cccccc;
+            font-size: 1.1rem;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .title {
+                font-size: 2.5rem;
+            }
+
+            .social-links {
+                gap: 1rem;
+            }
+
+            .stats {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-links">
+                <a href="#home">Inicio</a>
+                <a href="#about">Sobre Mí</a>
+                <a href="#social">Social</a>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <img src="/api/placeholder/200/200" alt="Jotai Profile" class="profile-img">
+            <h1 class="title">JOTAI</h1>
+            <p class="subtitle">Creador de Contenido | YouTuber | TikToker</p>
+            <div class="social-links">
+                <a href="https://www.youtube.com/@jotaii" class="social-button" target="_blank">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
+                <a href="https://www.tiktok.com/@_jotaii" class="social-button" target="_blank">
+                    <i class="fab fa-tiktok"></i> TikTok
+                </a>
+                <a href="https://discord.gg/4msDsMKW" class="social-button" target="_blank">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="content-section">
+        <h2 class="title">Sobre Mí</h2>
+        <p class="subtitle">¡Hola! Soy Jotai, creador de contenido apasionado por entretener y compartir momentos únicos con mi comunidad.</p>
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">122</div>
+                <div class="stat-label">Seguidores</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">16+</div>
+                <div class="stat-label">Videos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2K+</div>
+                <div class="stat-label">Likes</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="social" class="content-section">
+        <h2 class="title">Sígueme en Redes</h2>
+        <p class="subtitle">¡No te pierdas ningún contenido! Sígueme en todas mis redes sociales</p>
+        <div class="social-links">
+            <a href="https://www.youtube.com/@jotaii" class="social-button" target="_blank">
+                <i class="fab fa-youtube"></i> Canal de YouTube
+            </a>
+            <a href="https://www.tiktok.com/@_jotaii" class="social-button" target="_blank">
+                <i class="fab fa-tiktok"></i> Perfil de TikTok
+            </a>
+            <a href="https://discord.gg/4msDsMKW" class="social-button" target="_blank">
+                <i class="fab fa-discord"></i> Servidor de Discord
+            </a>
+        </div>
+    </section>
+</body>
+</html>
