@@ -25,6 +25,8 @@
             background-color: #0f0f0f;
             color: white;
             overflow-x: hidden;
+            width: 100%;
+            min-height: 100vh;
         }
 
         .header {
@@ -42,13 +44,16 @@
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            padding: 0 1rem;
         }
 
         .nav-links {
             display: flex;
             gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .nav-links a {
@@ -58,6 +63,7 @@
             transition: all 0.3s;
             position: relative;
             padding: 0.5rem 1rem;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
         }
 
         .nav-links a::after {
@@ -76,7 +82,7 @@
         }
 
         .hero {
-            height: 100vh;
+            min-height: 100vh;
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
                         url('https://i.postimg.cc/TYZf1kHQ/IMG-6887.webp');
             background-size: cover;
@@ -86,6 +92,7 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+            padding: 1rem;
         }
 
         .hero::before {
@@ -101,13 +108,15 @@
         .hero-content {
             text-align: center;
             z-index: 1;
-            padding: 2rem;
+            padding: clamp(1rem, 5vw, 2rem);
             background: rgba(0, 0, 0, 0.5);
             border-radius: 20px;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 0, 0, 0.3);
             transform: translateY(0);
             animation: fadeIn 1.5s ease-out;
+            width: min(90%, 600px);
+            margin: auto;
         }
 
         @keyframes fadeIn {
@@ -122,8 +131,8 @@
         }
 
         .profile-img {
-            width: 200px;
-            height: 200px;
+            width: min(200px, 40vw);
+            height: min(200px, 40vw);
             border-radius: 50%;
             border: 4px solid var(--primary-red);
             margin-bottom: 2rem;
@@ -134,13 +143,14 @@
         .social-links {
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: clamp(1rem, 3vw, 2rem);
             margin-top: 2rem;
             flex-wrap: wrap;
+            padding: 0 1rem;
         }
 
         .social-button {
-            padding: 1rem 2rem;
+            padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2rem);
             border: none;
             border-radius: 50px;
             background: linear-gradient(45deg, var(--dark-red), var(--primary-red));
@@ -154,6 +164,10 @@
             gap: 0.8rem;
             position: relative;
             overflow: hidden;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            width: fit-content;
+            min-width: 180px;
+            justify-content: center;
         }
 
         .social-button:hover {
@@ -177,9 +191,9 @@
         }
 
         .content-section {
-            max-width: 1200px;
+            max-width: min(1200px, 95%);
             margin: 4rem auto;
-            padding: 2rem;
+            padding: clamp(1rem, 5vw, 2rem);
             text-align: center;
             position: relative;
         }
@@ -190,13 +204,13 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
+            width: min(100px, 30%);
             height: 3px;
             background: var(--primary-red);
         }
 
         .title {
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             margin-bottom: 1rem;
             color: var(--primary-red);
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
@@ -205,10 +219,11 @@
         }
 
         .subtitle {
-            font-size: 1.5rem;
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
             margin-bottom: 2rem;
             color: #cccccc;
             line-height: 1.6;
+            padding: 0 1rem;
         }
 
         @keyframes float {
@@ -217,29 +232,59 @@
             100% { transform: translateY(0px); }
         }
 
-        /* Estilos responsivos */
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .title {
-                font-size: 2.5rem;
-            }
-
-            .social-links {
-                gap: 1rem;
-            }
-        }
-
         .about-text {
             text-align: left;
             margin: 2rem 0;
             line-height: 1.8;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            padding: 0 clamp(0.5rem, 3vw, 1.5rem);
         }
 
         .about-text p {
             margin-bottom: 1rem;
+        }
+
+        /* Mejoras responsivas adicionales */
+        @media (max-width: 480px) {
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .social-button {
+                width: 100%;
+                max-width: 280px;
+            }
+
+            .about-text {
+                text-align: justify;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 1.5rem;
+            }
+
+            .content-section {
+                margin: 3rem auto;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .hero-content {
+                max-width: 800px;
+            }
+
+            .about-text {
+                max-width: 900px;
+                margin-left: auto;
+                margin-right: auto;
+            }
         }
     </style>
 </head>
